@@ -1,4 +1,4 @@
 drupal-releases
 ===============
 
-Client for updates.drupal.org
+Client for http://updates.drupal.org/release-history/
