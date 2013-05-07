@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Drupal Updates package.
+ * This file is part of the Drupal Releases package.
  *
  * (c) Shawn Iwinski <shawn.iwinski@gmail.com>
  *
