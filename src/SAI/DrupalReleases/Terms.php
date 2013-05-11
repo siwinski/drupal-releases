@@ -12,6 +12,21 @@
 namespace SAI\DrupalReleases;
 
 /**
+ * <terms>
+ *     <term>
+ *         <name>Projects</name>
+ *         <value>Drupal core</value>
+ *     </term>
+ *     <term>
+ *         <name>Development status</name>
+ *         <value>Under active development</value>
+ *     </term>
+ *     <term>
+ *         <name>Maintenance status</name>
+ *         <value>Actively maintained</value>
+ *     </term>
+ * </terms>
+ *
  * @author Shawn Iwinski <shawn.iwinski@gmail.com>
  */
 class Terms extends \ArrayObject
