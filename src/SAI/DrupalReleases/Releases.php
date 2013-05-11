@@ -12,6 +12,13 @@
 namespace SAI\DrupalReleases;
 
 /**
+ * <releases>
+ *     <release>...</release>
+ *     <release>...</release>
+ *     <release>...</release>
+ *     ...
+ * </releases>
+ *
  * @author Shawn Iwinski <shawn.iwinski@gmail.com>
  */
 class Releases extends \ArrayObject
@@ -25,7 +32,8 @@ class Releases extends \ArrayObject
         $array = array();
 
         foreach ($releases as $release) {
-            $array[] = new Release($release);
+            $key = (string) $release->version;
+            $array[$key] = new Release($release);
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
