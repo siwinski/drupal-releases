@@ -20,9 +20,7 @@ namespace SAI\DrupalReleases;
  *     <version_patch>22</version_patch>
  *     <status>published</status>
  *     <release_link>http://drupal.org/drupal-7.22-release-notes</release_link>
- *     <download_link>
- *         http://ftp.drupal.org/files/projects/drupal-7.22.tar.gz
- *     </download_link>
+ *     <download_link>http://ftp.drupal.org/files/projects/drupal-7.22.tar.gz</download_link>
  *     <date>1365027013</date>
  *     <mdhash>068d7a77958fce6bb002659aa7ccaeb7</mdhash>
  *     <filesize>3183014</filesize>
@@ -48,11 +46,16 @@ class Release extends \ArrayObject
     }
 
     /**
-     *
+     * @uses ClientAbstract::getClient()
      */
     public function download()
     {
-        // TODO
+        $fileUrl  = $this['download_link'];
+        $fileName = preg_replace('#.*/#', '', $fileUrl);
+
+        ClientAbstract::getClient()->get($fileUrl, null, $fileName)->send();
+
+        // TODO: Validate downloaded file
     }
 
 }
