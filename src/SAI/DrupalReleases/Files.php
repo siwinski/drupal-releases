@@ -44,7 +44,9 @@ class Files extends \ArrayObject
      */
     public function download()
     {
-        // TODO
+        foreach ($this as $file) {
+            $file->download();
+        }
     }
 
 }
