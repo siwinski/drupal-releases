@@ -41,11 +41,16 @@ class File extends \ArrayObject
     }
 
     /**
-     *
+     * @uses ClientAbstract::getClient()
      */
     public function download()
     {
-        // TODO
+        $fileUrl  = $this['url'];
+        $fileName = preg_replace('#.*/#', '', $fileUrl);
+
+        ClientAbstract::getClient()->get($fileUrl, null, $fileName)->send();
+
+        // TODO: Validate downloaded file
     }
 
 }
