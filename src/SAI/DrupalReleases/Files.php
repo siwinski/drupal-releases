@@ -52,7 +52,7 @@ class Files extends \ArrayObject
      */
     public function release()
     {
-      return $this->release;
+        return $this->release;
     }
 
     /**
@@ -62,7 +62,7 @@ class Files extends \ArrayObject
      */
     public function project()
     {
-      return $this->release->project();
+        return $this->release->project();
     }
 
     /**

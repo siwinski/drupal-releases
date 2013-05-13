@@ -70,7 +70,7 @@ class Release extends \ArrayObject
      */
     public function project()
     {
-      return $this->project;
+        return $this->project;
     }
 
     /**
