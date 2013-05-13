@@ -47,4 +47,12 @@ class Project extends ClientAbstract
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
     }
 
+    /**
+     *
+     */
+    public function isPublished()
+    {
+        return 'published' == $this['project_status'];
+    }
+
 }
