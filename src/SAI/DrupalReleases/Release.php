@@ -39,8 +39,18 @@ class Release extends \ArrayObject
     public function __construct(\SimpleXMLElement $release)
     {
         $array = (array) $release;
-        $array['files'] = new Files($array['files']);
-        $array['terms'] = new Terms($array['terms']);
+
+        if (isset($array['files'])) {
+            $array['files'] = new Files($array['files']);
+        } else {
+            $array['files'] = new Files(new \SimpleXMLElement('<files></files>'));
+        }
+
+        if (isset($array['terms'])) {
+            $array['terms'] = new Terms($array['terms']);
+        } else {
+            $array['terms'] = new Terms(new \SimpleXMLElement('<terms></terms>'));
+        }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
     }
