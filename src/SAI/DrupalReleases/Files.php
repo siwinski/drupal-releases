@@ -25,18 +25,44 @@ class Files extends \ArrayObject
 {
 
     /**
+     * Parent release
+     * @var SAI\DrupalReleases\Release
+     */
+    protected $release;
+
+    /**
      *
      */
-    public function __construct(\SimpleXMLElement $files)
+    public function __construct(\SimpleXMLElement $files, SAI\DrupalReleases\Release &$release)
     {
-        $array = array();
+        $this->release = $release;
 
+        $array = array();
         foreach ($files as $file) {
-            $key = (string) $file->archive_type;
-            $array[$key] = new File($file);
+            $array[(string) $file->archive_type] = new File($file, $release);
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
+    }
+
+    /**
+     * Returns parent release
+     *
+     * @return SAI\DrupalReleases\Release
+     */
+    public function release()
+    {
+      return $this->release;
+    }
+
+    /**
+     * Returns parent project
+     *
+     * @return SAI\DrupalReleases\Project
+     */
+    public function project()
+    {
+      return $this->release->project();
     }
 
     /**
