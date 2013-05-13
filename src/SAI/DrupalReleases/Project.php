@@ -116,4 +116,18 @@ class Project extends ClientAbstract
         return $this->development();
     }
 
+    /**
+     *
+     */
+    public function download()
+    {
+        $recommended = $this->recommended();
+
+        if (isset($recommended)) {
+            $recommended->download();
+        }
+
+        // TODO: Throw error if no recommended
+    }
+
 }
