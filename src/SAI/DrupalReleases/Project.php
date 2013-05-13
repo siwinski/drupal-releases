@@ -30,7 +30,21 @@ class Project extends ClientAbstract
         )));
         $this->response = $this->request->send();
 
-        parent::__construct((array) $this->response->xml(), \ArrayObject::STD_PROP_LIST);
+        $array = (array) $this->response->xml();
+
+        if (isset($array['terms'])) {
+            $array['terms'] = new Terms($array['terms']);
+        } else {
+            $array['terms'] = array();  // TODO: Should be object!
+        }
+
+        if (isset($array['releases'])) {
+            $array['releases'] = new Releases($array['releases']);
+        } else {
+            $array['releases'] = array();  // TODO: Should be object!
+        }
+
+        parent::__construct($array, \ArrayObject::STD_PROP_LIST);
     }
 
 }
