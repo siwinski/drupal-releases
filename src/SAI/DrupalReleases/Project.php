@@ -19,6 +19,8 @@ class Project extends ClientAbstract
 
     const URL_PATH = '/release-history/{project}/{api_version}.x';
 
+    protected $recommended = null;
+
     /**
      *
      */
@@ -53,6 +55,34 @@ class Project extends ClientAbstract
     public function isPublished()
     {
         return 'published' == $this['project_status'];
+    }
+
+    /**
+     *
+     */
+    public function recommended()
+    {
+        if (!isset($this->recommended)) {
+            $major = $this['recommended_major'];
+            $max   = null;
+
+            foreach ($this['releases'] as &$release) {
+                if ($release['version_major'] != $major) {
+                    continue;
+                }
+
+                if (!isset($max) || version_compare($release['version'], $max, '>')) {
+                    $max = $release['version'];
+                    $this->recommended = &$release;
+                }
+            }
+
+            if (!isset($this->recommended)) {
+                $this->recommended = &$this->development();
+            }
+        }
+
+        return $this->recommended;
     }
 
 }
