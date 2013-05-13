@@ -33,11 +33,38 @@ class File extends \ArrayObject
 {
 
     /**
+     * Parent release
+     * @var SAI\DrupalReleases\Release
+     */
+    protected $release;
+
+    /**
      *
      */
-    public function __construct(\SimpleXMLElement $file)
+    public function __construct(\SimpleXMLElement $file, SAI\DrupalReleases\Release &$release)
     {
+        $this->release = $release;
         parent::__construct((array) $file, \ArrayObject::STD_PROP_LIST);
+    }
+
+    /**
+     * Returns parent release
+     *
+     * @return SAI\DrupalReleases\Release
+     */
+    public function release()
+    {
+      return $this->release;
+    }
+
+    /**
+     * Returns parent project
+     *
+     * @return SAI\DrupalReleases\Project
+     */
+    public function project()
+    {
+      return $this->release->project();
     }
 
     /**
