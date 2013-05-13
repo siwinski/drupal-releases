@@ -12,6 +12,13 @@
 namespace SAI\DrupalReleases;
 
 /**
+ * <projects>
+ *     <project>...</project>
+ *     <project>...</project>
+ *     <project>...</project>
+ *     ...
+ * </projects>
+ *
  * @author Shawn Iwinski <shawn.iwinski@gmail.com>
  */
 class Projects extends ClientAbstract
@@ -25,8 +32,7 @@ class Projects extends ClientAbstract
      */
     public function __construct($apiVersion = null, $unpublished = false, $sandbox = false)
     {
-        $this->request  = self::getClient()->get(self::URL_PATH);
-        $this->response = $this->request->send();
+        $this->response = self::getClient()->get(self::URL_PATH)->send();
         $filters        = array();
 
         // Published
@@ -65,7 +71,15 @@ class Projects extends ClientAbstract
         }
         unset($filters);
 
-        parent::__construct($this->response->xml()->xpath($this->xpath), \ArrayObject::STD_PROP_LIST);
+        $xpathArray = $this->response->xml()->xpath($this->xpath);
+        $array      = array();
+        foreach ($xpathArray as $projectOverview) {
+            $key = (string) $projectOverview->short_name;
+            $array[$key] = new ProjectOverview($projectOverview, $this)
+        }
+        unset($xpathArray);
+
+        parent::__construct($array, \ArrayObject::STD_PROP_LIST);
     }
 
     /**
