@@ -49,9 +49,9 @@ class Project extends ClientAbstract
         }
 
         if (isset($array['releases'])) {
-            $array['releases'] = new Releases($array['releases']);
+            $array['releases'] = new Releases($array['releases'], $this);
         } else {
-            $array['releases'] = new Releases(new \SimpleXMLElement('<releases></releases>'));
+            $array['releases'] = new Releases(new \SimpleXMLElement('<releases></releases>'), $this);
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
