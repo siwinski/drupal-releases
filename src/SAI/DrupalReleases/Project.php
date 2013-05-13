@@ -103,8 +103,7 @@ class Project extends ClientAbstract
 
             foreach ($this['releases'] as &$release) {
                 if (($release['version_major'] == $major)
-                    && isset($release['version_extra'])
-                    && ('dev' == $release['version_extra'])) {
+                    && $release->isDevelopment()) {
                     $this->development = &$release;
                     break;
                 }
