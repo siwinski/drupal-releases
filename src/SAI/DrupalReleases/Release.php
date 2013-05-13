@@ -56,6 +56,14 @@ class Release extends \ArrayObject
     }
 
     /**
+     *
+     */
+    public function isPublished()
+    {
+        return 'published' == $this['status'];
+    }
+
+    /**
      * @uses ClientAbstract::getClient()
      */
     public function download()
