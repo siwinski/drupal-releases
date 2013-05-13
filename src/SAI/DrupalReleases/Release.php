@@ -64,6 +64,22 @@ class Release extends \ArrayObject
     }
 
     /**
+     *
+     */
+    public function isDevelopment()
+    {
+        return isset($this['version_extra']) && ('dev' == $this['version_extra']);
+    }
+
+    /**
+     * Alias for {@link isDevelopment()}.
+     */
+    public function isDev()
+    {
+        return $this->isDevelopment();
+    }
+
+    /**
      * @uses ClientAbstract::getClient()
      */
     public function download()
