@@ -49,9 +49,9 @@ class Release extends \ArrayObject
         $array = (array) $release;
 
         if (isset($array['files'])) {
-            $array['files'] = new Files($array['files']);
+            $array['files'] = new Files($array['files'], $this);
         } else {
-            $array['files'] = new Files(new \SimpleXMLElement('<files></files>'));
+            $array['files'] = new Files(new \SimpleXMLElement('<files></files>'), $this);
         }
 
         if (isset($array['terms'])) {
