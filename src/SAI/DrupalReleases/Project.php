@@ -28,11 +28,10 @@ class Project extends ClientAbstract
      */
     public function __construct($project, $api_version)
     {
-        $this->request = self::getClient()->get(array(self::URL_PATH, array(
+        $this->response = self::getClient()->get(array(self::URL_PATH, array(
             'project'     => $project,
             'api_version' => intval($api_version),
-        )));
-        $this->response = $this->request->send();
+        )))->send();
 
         $array = (array) $this->response->xml();
 
