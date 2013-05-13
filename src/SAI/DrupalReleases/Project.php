@@ -36,6 +36,12 @@ class Project extends ClientAbstract
 
         $array = (array) $this->response->xml();
 
+        if (isset($array['supported_majors'])) {
+            $array['supported_majors'] = explode(',', $array['supported_majors']);
+        } else {
+            $array['supported_majors'] = array();
+        }
+
         if (isset($array['terms'])) {
             $array['terms'] = new Terms($array['terms']);
         } else {
