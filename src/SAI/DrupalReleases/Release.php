@@ -34,10 +34,18 @@ class Release extends \ArrayObject
 {
 
     /**
+     * Parent project
+     * @var SAI\DrupalReleases\Project
+     */
+    protected $project;
+
+    /**
      *
      */
-    public function __construct(\SimpleXMLElement $release)
+    public function __construct(\SimpleXMLElement $release, SAI\DrupalReleases\Project &$project)
     {
+        $this->project = $project;
+
         $array = (array) $release;
 
         if (isset($array['files'])) {
@@ -53,6 +61,16 @@ class Release extends \ArrayObject
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
+    }
+
+    /**
+     * Returns parent project
+     *
+     * @return SAI\DrupalReleases\Project
+     */
+    public function project()
+    {
+      return $this->project;
     }
 
     /**
