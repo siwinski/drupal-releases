@@ -39,13 +39,13 @@ class Project extends ClientAbstract
         if (isset($array['terms'])) {
             $array['terms'] = new Terms($array['terms']);
         } else {
-            $array['terms'] = array();  // TODO: Should be object!
+            $array['terms'] = new Terms(new \SimpleXMLElement('<terms></terms>'));
         }
 
         if (isset($array['releases'])) {
             $array['releases'] = new Releases($array['releases']);
         } else {
-            $array['releases'] = array();  // TODO: Should be object!
+            $array['releases'] = new Releases(new \SimpleXMLElement('<releases></releases>'));
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
