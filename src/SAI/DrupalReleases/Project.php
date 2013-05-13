@@ -21,6 +21,8 @@ class Project extends ClientAbstract
 
     protected $recommended = null;
 
+    protected $development = null;
+
     /**
      *
      */
@@ -83,6 +85,35 @@ class Project extends ClientAbstract
         }
 
         return $this->recommended;
+    }
+
+    /**
+     *
+     */
+    public function development()
+    {
+        if (!isset($this->development)) {
+            $major = $this['recommended_major'];
+
+            foreach ($this['releases'] as &$release) {
+                if (($release['version_major'] == $major)
+                    && isset($release['version_extra'])
+                    && ('dev' == $release['version_extra'])) {
+                    $this->development = &$release;
+                    break;
+                }
+            }
+        }
+
+        return $this->development;
+    }
+
+    /**
+     * Alias for {@link development()}.
+     */
+    public function dev()
+    {
+        return $this->development();
     }
 
 }
