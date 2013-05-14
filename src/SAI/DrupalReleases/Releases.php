@@ -33,7 +33,7 @@ class Releases extends \ArrayObject
     /**
      *
      */
-    public function __construct(\SimpleXMLElement $releases, SAI\DrupalReleases\Project &$project)
+    public function __construct(\SimpleXMLElement $releases, Project &$project)
     {
         $this->project = $project;
 

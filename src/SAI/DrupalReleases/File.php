@@ -41,7 +41,7 @@ class File extends \ArrayObject
     /**
      *
      */
-    public function __construct(\SimpleXMLElement $file, SAI\DrupalReleases\Release &$release)
+    public function __construct(\SimpleXMLElement $file, Release &$release)
     {
         $this->release = $release;
         parent::__construct((array) $file, \ArrayObject::STD_PROP_LIST);

@@ -33,7 +33,7 @@ class Files extends \ArrayObject
     /**
      *
      */
-    public function __construct(\SimpleXMLElement $files, SAI\DrupalReleases\Release &$release)
+    public function __construct(\SimpleXMLElement $files, Release &$release)
     {
         $this->release = $release;
 
