@@ -32,12 +32,12 @@ class SearchCommand extends Command
     {
         $this
             ->setName('search')
-            ->setDescription('Search Drupal project overviews')
+            ->setDescription('Searches project overviews')
             ->addOption(
                 'api',
                 null,
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'Drupal API version(s) ("8.x" or "8")'
+                'API version(s) ("#.x" or "#")'
             )
             ->addOption(
                 'published',
