@@ -11,6 +11,8 @@
 
 namespace SAI\DrupalReleases;
 
+use  SAI\DrupalReleases\Projects\ProjectOverview;
+
 /**
  * <projects>
  *     <project>...</project>
@@ -75,7 +77,7 @@ class Projects extends ClientAbstract
         $array      = array();
         foreach ($xpathArray as $projectOverview) {
             $key = (string) $projectOverview->short_name;
-            $array[$key] = new ProjectOverview($projectOverview, $this)
+            $array[$key] = new ProjectOverview($projectOverview, $this);
         }
         unset($xpathArray);
 
