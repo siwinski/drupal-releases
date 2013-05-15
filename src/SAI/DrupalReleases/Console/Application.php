@@ -11,6 +11,8 @@
 
 namespace SAI\DrupalReleases\Console;
 
+use SAI\DrupalReleases\Console\Command\SearchCommand;
+
 use Symfony\Component\Console\Application as BaseApplication;
 
 /**
@@ -45,6 +47,20 @@ class Application extends BaseApplication
     public function getHelp()
     {
       return self::$logo . parent::getHelp();
+    }
+
+    /**
+     * Initializes all commands
+     */
+    protected function getDefaultCommands()
+    {
+        // Keep the core default commands
+        $commands = parent::getDefaultCommands();
+
+        // Add commands
+        $commands[] = new SearchCommand();
+
+        return $commands;
     }
 
 }
