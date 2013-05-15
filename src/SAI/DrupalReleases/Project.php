@@ -19,10 +19,6 @@ class Project extends ClientAbstract
 
     const URL_PATH = '/release-history/{project}/{api_version}.x';
 
-    protected $recommended = null;
-
-    protected $development = null;
-
     /**
      *
      */
@@ -69,27 +65,7 @@ class Project extends ClientAbstract
      */
     public function recommended()
     {
-        if (!isset($this->recommended)) {
-            $major = $this['recommended_major'];
-            $max   = null;
-
-            foreach ($this['releases'] as &$release) {
-                if ($release['version_major'] != $major) {
-                    continue;
-                }
-
-                if (!isset($max) || version_compare($release['version'], $max, '>')) {
-                    $max = $release['version'];
-                    $this->recommended = &$release;
-                }
-            }
-
-            if (!isset($this->recommended)) {
-                $this->recommended = &$this->development();
-            }
-        }
-
-        return $this->recommended;
+        return $this['releases']->recommended();
     }
 
     /**
@@ -97,19 +73,7 @@ class Project extends ClientAbstract
      */
     public function development()
     {
-        if (!isset($this->development)) {
-            $major = $this['recommended_major'];
-
-            foreach ($this['releases'] as &$release) {
-                if (($release['version_major'] == $major)
-                    && $release->isDevelopment()) {
-                    $this->development = &$release;
-                    break;
-                }
-            }
-        }
-
-        return $this->development;
+        return $this['releases']->development();
     }
 
     /**
