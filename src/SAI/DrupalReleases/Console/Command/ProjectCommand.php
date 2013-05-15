@@ -40,7 +40,7 @@ class ProjectCommand extends Command
             ->addArgument(
                 'api',
                 InputArgument::REQUIRED,
-                'Project API version ("8.x" or "8")'
+                'Project API version ("#.x" or "#")'
             )
         ;
     }
