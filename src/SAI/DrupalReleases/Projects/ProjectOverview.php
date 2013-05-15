@@ -11,6 +11,9 @@
 
 namespace SAI\DrupalReleases\Projects;
 
+use SAI\DrupalReleases\Projects;
+use SAI\DrupalReleases\Terms;
+
 /**
  * <project>
  *     <title>Drupal core</title>
@@ -50,7 +53,7 @@ class ProjectOverview extends \ArrayObject
     /**
      *
      */
-    public function __construct(\SimpleXMLElement $project, SAI\DrupalReleases\Projects &$projects)
+    public function __construct(\SimpleXMLElement $project, Projects &$projects)
     {
         $this->projects = $projects;
 
@@ -65,7 +68,7 @@ class ProjectOverview extends \ArrayObject
         $api_versions = array();
         if (isset($array['api_versions'])) {
             foreach ($array['api_versions'] as $api_version) {
-                $api_versions[] = (string) $api_version->api_version;
+                $api_versions[] = (string) $api_version;
             }
         }
         $array['api_versions'] = $api_versions;
