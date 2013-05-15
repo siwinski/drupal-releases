@@ -12,7 +12,6 @@
 namespace SAI\DrupalReleases\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,7 +28,8 @@ class SearchCommand extends Command
     /**
      *
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this
             ->setName('search')
             ->setDescription('Search Drupal project overviews')
@@ -59,7 +59,8 @@ class SearchCommand extends Command
     /**
      *
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $api       = $input->getOption('api');
         $published = $this->getOptionPublished($input);
         $sandbox   = $this->getOptionSandbox($input);
@@ -75,10 +76,11 @@ class SearchCommand extends Command
 
     /**
      *
-     * @param InputInterface $input
+     * @param  InputInterface            $input
      * @throws \InvalidArgumentException
      */
-    protected function getOptionPublished(InputInterface $input) {
+    protected function getOptionPublished(InputInterface $input)
+    {
         $published = strtolower(trim($input->getOption('published')));
 
         switch ($published) {
@@ -89,16 +91,17 @@ class SearchCommand extends Command
           case 'both':
               return null;
           default:
-            throw new \InvalidArgumentException('Published option must be "yes", "no", or "both".');
+              throw new \InvalidArgumentException('Published option must be "yes", "no", or "both".');
         }
     }
 
     /**
      *
-     * @param InputInterface $input
+     * @param  InputInterface            $input
      * @throws \InvalidArgumentException
      */
-    protected function getOptionSandbox(InputInterface $input) {
+    protected function getOptionSandbox(InputInterface $input)
+    {
         $sandbox = strtolower(trim($input->getOption('sandbox')));
 
         switch ($sandbox) {
@@ -109,11 +112,12 @@ class SearchCommand extends Command
           case 'both':
               return null;
           default:
-            throw new \InvalidArgumentException('Sandbox option must be "yes", "no", or "both".');
+              throw new \InvalidArgumentException('Sandbox option must be "yes", "no", or "both".');
         }
     }
 
-    protected function outputProject(OutputInterface $output, ProjectOverview $project) {
+    protected function outputProject(OutputInterface $output, ProjectOverview $project)
+    {
         $output->writeln('');
         $this->labelWriteln($output, 'Title',        $project['title'], true);
         $this->labelWriteln($output, 'Machine Name', $project['short_name'], true);
@@ -126,7 +130,8 @@ class SearchCommand extends Command
         }
     }
 
-    protected function labelWriteln(OutputInterface $output, $label, $value, $valueIsComment=false) {
+    protected function labelWriteln(OutputInterface $output, $label, $value, $valueIsComment=false)
+    {
         $output->writeln(sprintf(' <info>%s</info>: %s',
             sprintf('%20s', $label),
             $valueIsComment ? "<comment>$value</comment>" : $value
