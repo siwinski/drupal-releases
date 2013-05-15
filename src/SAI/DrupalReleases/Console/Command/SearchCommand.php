@@ -86,7 +86,7 @@ class SearchCommand extends Command
               return false;
           case 'no':
               return true;
-          case null:
+          case 'both':
               return null;
           default:
             throw new \InvalidArgumentException('Published option must be "yes", "no", or "both".');
@@ -106,7 +106,7 @@ class SearchCommand extends Command
               return true;
           case 'no':
               return false;
-          case null:
+          case 'both':
               return null;
           default:
             throw new \InvalidArgumentException('Sandbox option must be "yes", "no", or "both".');
