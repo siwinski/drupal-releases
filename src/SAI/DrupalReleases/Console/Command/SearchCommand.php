@@ -114,17 +114,23 @@ class SearchCommand extends Command
     }
 
     protected function outputProject(OutputInterface $output, ProjectOverview $project) {
-        $apiVersions = implode(', ', $project['api_versions']);
+        $output->writeln('');
+        $this->labelWriteln($output, 'Title',        $project['title'], true);
+        $this->labelWriteln($output, 'Machine Name', $project['short_name'], true);
+        $this->labelWriteln($output, 'URL',          $project['link']);
+        $this->labelWriteln($output, 'Status',       $project['project_status']);
+        $this->labelWriteln($output, 'API Versions', implode(', ', $project['api_versions']));
 
-        $output->writeln(<<<PROJECT
+        foreach ($project['terms'] as $term => $values) {
+            $this->labelWriteln($output, $term, implode(', ', $values));
+        }
+    }
 
- <info>       Title:</info> <comment>{$project['title']}</comment>
- <info>Machine Name:</info> <comment>{$project['short_name']}</comment>
- <info>         URL:</info> {$project['link']}
- <info>      Status:</info> {$project['project_status']}
- <info>API Versions:</info> {$apiVersions}
-PROJECT
-        );
+    protected function labelWriteln(OutputInterface $output, $label, $value, $valueIsComment=false) {
+        $output->writeln(sprintf(' <info>%s</info>: %s',
+            sprintf('%20s', $label),
+            $valueIsComment ? "<comment>$value</comment>" : $value
+        ));
     }
 
 }
