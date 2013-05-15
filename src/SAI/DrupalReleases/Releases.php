@@ -24,6 +24,10 @@ namespace SAI\DrupalReleases;
 class Releases extends \ArrayObject
 {
 
+    protected $recommended = null;
+
+    protected $development = null;
+
     /**
      * Parent project
      * @var SAI\DrupalReleases\Project
@@ -55,6 +59,62 @@ class Releases extends \ArrayObject
     public function project()
     {
         return $this->project;
+    }
+
+    /**
+     *
+     */
+    public function recommended()
+    {
+        if (!isset($this->recommended)) {
+            $major = $this->project['recommended_major'];
+            $max   = null;
+
+            foreach ($this as &$release) {
+                if ($release['version_major'] != $major) {
+                    continue;
+                }
+
+                if (!isset($max) || version_compare($release['version'], $max, '>')) {
+                    $max = $release['version'];
+                    $this->recommended = &$release;
+                }
+            }
+
+            if (!isset($this->recommended)) {
+                $this->recommended = &$this->development();
+            }
+        }
+
+        return $this->recommended;
+    }
+
+    /**
+     *
+     */
+    public function development()
+    {
+        if (!isset($this->development)) {
+            $major = $this->project['recommended_major'];
+
+            foreach ($this as &$release) {
+                if (($release['version_major'] == $major)
+                    && $release->isDevelopment()) {
+                    $this->development = &$release;
+                    break;
+                }
+            }
+        }
+
+        return $this->development;
+    }
+
+    /**
+     * Alias for {@link development()}.
+     */
+    public function dev()
+    {
+        return $this->development();
     }
 
 }
