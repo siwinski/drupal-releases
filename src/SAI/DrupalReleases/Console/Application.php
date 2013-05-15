@@ -11,6 +11,7 @@
 
 namespace SAI\DrupalReleases\Console;
 
+use SAI\DrupalReleases\Console\Command\ProjectCommand;
 use SAI\DrupalReleases\Console\Command\SearchCommand;
 
 use Symfony\Component\Console\Application as BaseApplication;
@@ -58,6 +59,7 @@ class Application extends BaseApplication
         $commands = parent::getDefaultCommands();
 
         // Add commands
+        $commands[] = new ProjectCommand();
         $commands[] = new SearchCommand();
 
         return $commands;
