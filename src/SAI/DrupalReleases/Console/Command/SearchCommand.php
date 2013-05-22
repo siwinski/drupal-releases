@@ -12,6 +12,7 @@
 namespace SAI\DrupalReleases\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,6 +34,11 @@ class SearchCommand extends Command
         $this
             ->setName('search')
             ->setDescription('Searches project overviews')
+            ->addArgument(
+                'machine_name',
+                InputArgument::IS_ARRAY,
+                'Project machine name (examples: "devel", "devel*", "*devel*", or "*devel")'
+            )
             ->addOption(
                 'api',
                 null,
@@ -61,11 +67,12 @@ class SearchCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $api       = $input->getOption('api');
-        $published = $this->getOptionPublished($input);
-        $sandbox   = $this->getOptionSandbox($input);
+        $machine_names = $input->getArgument('machine_name');
+        $api           = $input->getOption('api');
+        $published     = $this->getOptionPublished($input);
+        $sandbox       = $this->getOptionSandbox($input);
 
-        $projects = new Projects($api, $published, $sandbox);
+        $projects      = new Projects($machine_names, $api, $published, $sandbox);
 
         $output->writeln(sprintf(' <info>%d projects found.</info>', count($projects)));
 
