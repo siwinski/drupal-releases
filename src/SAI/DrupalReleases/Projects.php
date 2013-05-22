@@ -32,10 +32,41 @@ class Projects extends ClientAbstract
     /**
      *
      */
-    public function __construct($apiVersion = null, $unpublished = false, $sandbox = false)
+    public function __construct(array $machineNames = array(), $apiVersion = null, $unpublished = false, $sandbox = false)
     {
         $this->response = self::getClient()->get(self::URL_PATH)->send();
         $filters        = array();
+
+        // Machine names
+        if (!empty($machineNames)) {
+            $machineNameFilters = array();
+
+            foreach ($machineNames as $mn) {
+                // machine_name (equals)
+                if (FALSE == strstr($mn, '*')) {
+                    $machineNameFilters[] = sprintf('string(short_name)="%s"', $mn);
+                // *machine_name* (contains)
+                } elseif (preg_match('/^\*.*\*$/', $mn)) {
+                    $machineNameFilters[] = sprintf('contains(short_name,"%s")', str_replace('*', '', $mn));
+                // machine_name* (starts with)
+                } elseif (preg_match('/\*$/', $mn)) {
+                    $machineNameFilters[] = sprintf('starts-with(short_name,"%s")', str_replace('*', '', $mn));
+                // *machine_name (ends with)
+                // See:
+                //     http://stackoverflow.com/questions/5435310/php-xpath-ends-with
+                //     http://stackoverflow.com/questions/402211/how-to-use-xpath-function-in-a-xpathexpression-instance-programatically/402357#402357
+                } elseif (preg_match('/^\*/', $mn)) {
+                    $mn = str_replace('*', '', $mn);
+                    $machineNameFilters[] = sprintf('"%s"=substring(short_name, string-length(short_name) - %d)', $mn, strlen($mn) - 1);
+                }
+            }
+
+            if (!empty($machineNameFilters)) {
+                $filters[] = '(' . implode(' or ', $machineNameFilters) . ')';
+            }
+
+            unset($machineNameFilters);
+        }
 
         // Published
         if (null !== $unpublished) {
@@ -65,6 +96,7 @@ class Projects extends ClientAbstract
             if (!empty($apiVersionFilters)) {
                 $filters[] = '(' . implode(' or ', $apiVersionFilters) . ')';
             }
+
             unset($apiVersionFilters);
         }
 
