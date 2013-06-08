@@ -47,7 +47,7 @@ class Application extends BaseApplication
      */
     public function getHelp()
     {
-      return self::$logo . parent::getHelp();
+      return '<info>' . self::$logo . '</info>' . parent::getHelp();
     }
 
     /**
