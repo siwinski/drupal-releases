@@ -32,16 +32,16 @@ class Projects extends ClientAbstract
     /**
      *
      */
-    public function __construct(array $machineNames = array(), $apiVersion = null, $unpublished = false, $sandbox = false)
+    public function __construct(array $options = array())
     {
         $this->response = self::getClient()->get(self::URL_PATH)->send();
         $filters        = array();
 
         // Machine names
-        if (!empty($machineNames)) {
+        if (!empty($options['machine_name'])) {
             $machineNameFilters = array();
 
-            foreach ($machineNames as $mn) {
+            foreach ($options['machine_name'] as $mn) {
                 // machine_name (equals)
                 if (FALSE == strstr($mn, '*')) {
                     $machineNameFilters[] = sprintf('string(short_name)="%s"', $mn);
@@ -69,24 +69,30 @@ class Projects extends ClientAbstract
         }
 
         // Published
-        if (null !== $unpublished) {
-            $filters[] = $unpublished ?
-                'string(project_status)="unpublished"' :
-                'string(project_status)="published"';
+        if (!array_key_exists('published', $options)) {
+			$options['published'] = true;
+        }
+        if (isset($options['published'])) {
+            $filters[] = $options['published'] ?
+                'string(project_status)="published"' :
+                'string(project_status)="unpublished"';
         }
 
         // Sandbox
-        if (null !== $sandbox) {
-            $filters[] = $sandbox ?
+        if (!array_key_exists('sandbox', $options)) {
+			$options['sandbox'] = false;
+        }
+        if (isset($options['sandbox'])) {
+            $filters[] = $options['sandbox'] ?
                 'contains(link,"/sandbox/")' :
                 'not(contains(link,"/sandbox/"))';
         }
 
         // API versions
-        if (!empty($apiVersion)) {
+        if (!empty($options['api_version'])) {
             $apiVersionFilters = array();
 
-            foreach ((array) $apiVersion as $v) {
+            foreach ((array) $options['api_version'] as $v) {
                 $v = intval($v);
                 if (!empty($v)) {
                     $apiVersionFilters[] = sprintf('string(*/api_version)="%d.x"', $v);
