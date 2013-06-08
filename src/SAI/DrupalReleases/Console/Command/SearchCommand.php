@@ -67,12 +67,12 @@ class SearchCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $machine_names = $input->getArgument('machine_name');
-        $api           = $input->getOption('api');
-        $published     = $this->getOptionPublished($input);
-        $sandbox       = $this->getOptionSandbox($input);
-
-        $projects      = new Projects($machine_names, $api, $published, $sandbox);
+        $projects = new Projects(array(
+            'machine_names' => $input->getArgument('machine_name'),
+            'api_version'   => $input->getOption('api'),
+            'published'     => $this->getOptionPublished($input),
+            'sandbox'       => $this->getOptionSandbox($input),
+        ));
 
         $output->writeln(sprintf(' <info>%d projects found.</info>', count($projects)));
 
@@ -92,9 +92,9 @@ class SearchCommand extends Command
 
         switch ($published) {
           case 'yes':
-              return false;
-          case 'no':
               return true;
+          case 'no':
+              return false;
           case 'both':
               return null;
           default:
