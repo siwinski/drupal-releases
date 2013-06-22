@@ -84,6 +84,30 @@ class Release extends \ArrayObject
     /**
      *
      */
+    public function isRecommendedMajor()
+    {
+        return $this['version_major'] == $this->project['recommended_major'];
+    }
+
+    /**
+     *
+     */
+    public function isSupportedMajor()
+    {
+        return in_array($this['version_major'], $this->project['supported_majors']);
+    }
+
+    /**
+     *
+     */
+    public function isDefaultMajor()
+    {
+        return $this['version_major'] == $this->project['default_major']);
+    }
+
+    /**
+     *
+     */
     public function isDevelopment()
     {
         return isset($this['version_extra']) && ('dev' == $this['version_extra']);
