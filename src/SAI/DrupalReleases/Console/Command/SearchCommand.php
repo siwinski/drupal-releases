@@ -49,14 +49,14 @@ class SearchCommand extends Command
                 'published',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Published projects? value=yes|no|both',
+                'Published projects? (yes|no|both)',
                 'yes'
             )
             ->addOption(
                 'sandbox',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Sandbox projects? value=yes|no|both',
+                'Sandbox projects? (yes|no|both)',
                 'no'
             )
         ;
