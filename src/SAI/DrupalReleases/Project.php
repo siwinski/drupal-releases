@@ -12,6 +12,20 @@
 namespace SAI\DrupalReleases;
 
 /**
+ * <project xmlns:dc="http://purl.org/dc/elements/1.1/">
+ *     <title>Drupal core</title>
+ *     <short_name>drupal</short_name>
+ *     <dc:creator>Drupal</dc:creator>
+ *     <api_version>7.x</api_version>
+ *     <recommended_major>7</recommended_major>
+ *     <supported_majors>7</supported_majors>
+ *     <default_major>7</default_major>
+ *     <project_status>published</project_status>
+ *     <link>http://drupal.org/project/drupal</link>
+ *     <terms>...</terms>
+ *     <releases>...</releases>
+ * </project>
+ *
  * @author Shawn Iwinski <shawn.iwinski@gmail.com>
  */
 class Project extends ClientAbstract
@@ -82,6 +96,14 @@ class Project extends ClientAbstract
     public function dev()
     {
         return $this->development();
+    }
+
+    /**
+     *
+     */
+    public function hasVersion($version)
+    {
+        return $this['releases']->hasVersion($version);
     }
 
     /**
