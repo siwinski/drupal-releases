@@ -24,13 +24,13 @@ namespace SAI\DrupalReleases;
 class Releases extends \ArrayObject
 {
 
-    protected $recommended = null;
+    protected $recommended;
 
-    protected $development = null;
+    protected $development;
 
     /**
      * Parent project
-     * @var SAI\DrupalReleases\Project
+     * @var \SAI\DrupalReleases\Project
      */
     protected $project;
 
@@ -44,8 +44,8 @@ class Releases extends \ArrayObject
         $array = array();
 
         foreach ($releases as $release) {
-            $key = (string) $release->version;
-            $array[$key] = new Release($release, $project);
+            $version = (string) $release->version;
+            $array[$version] = new Release($release, $project);
         }
 
         parent::__construct($array, \ArrayObject::STD_PROP_LIST);
@@ -115,6 +115,14 @@ class Releases extends \ArrayObject
     public function dev()
     {
         return $this->development();
+    }
+
+    /**
+     *
+     */
+    public function hasVersion($version)
+    {
+        return $this->offsetExists($version);
     }
 
 }
